@@ -15,6 +15,8 @@ class BarChart {
         this.chartPosY = obj.chartPosY || 100;
         this.wordGap = obj.wordGap || 25;
         this.lineLength = obj.lineLength || 20;
+        this.titleGap = (obj.titleGap + this.chartHeight) || (20 + this.chartHeight);
+        this.title = obj.title || "Graph Title";
 
         this.gap = (this.chartWidth - this.data.length * this.barWidth - this.margin * 2) / (this.data.length - 1);
         this.scaler;
@@ -50,7 +52,16 @@ class BarChart {
                         text(textVar * (i + 1), -this.wordGap, 0);
                     }
                 pop();
+
+                // Graph Title
+                fill(this.axisTextColour);
+                textAlign(CENTER);
+                noStroke();
+                textStyle(BOLD);
+                text(this.title, (this.chartWidth/2), -this.titleGap);
+
                 // x axis
+                stroke(this.axisColour);
                 line(-this.lineLength, 0, this.chartWidth, 0);
                 fill(this.axisTextColour);
                 textAlign(RIGHT, CENTER);
@@ -98,7 +109,16 @@ class BarChart {
                     rotate(this.rotationAngle);
                     text("0", 0, 0);
                 pop();
+
+                // Graph Title
+                fill(this.axisTextColour);
+                textAlign(CENTER);
+                noStroke();
+                textStyle(BOLD);
+                text(this.title, (this.chartWidth/2), -this.titleGap);
+
                 // x axis
+                stroke(this.axisColour);
                 line(0, 0, (this.numOfLines * ceil(this.chartWidth/this.numOfLines)), 0);
                 push();
                     fill(this.axisTextColour);

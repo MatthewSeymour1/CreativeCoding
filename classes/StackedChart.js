@@ -19,6 +19,8 @@ class StackedChart {
         this.chartPosY = obj.chartPosY || 400;
         this.wordGap = obj.wordGap || 25;
         this.lineLength = obj.lineLength || 20;
+        this.titleGap = (obj.titleGap + this.chartHeight) || (20 + this.chartHeight);
+        this.title = obj.title || "Graph Title";
 
         this.gap;
         this.scaler;
@@ -67,9 +69,18 @@ class StackedChart {
                         }
                     pop();
 
-                    // x axis
-                    line(-this.lineLength, 0, this.chartWidth, 0);
+                    // Graph Title
                     fill(this.axisTextColour);
+                    textAlign(CENTER);
+                    noStroke();
+                    textStyle(BOLD);
+                    text(this.title, (this.chartWidth/2), -this.titleGap);
+
+                    // x axis
+
+                    stroke(this.axisColour);
+                    fill(this.axisTextColour);
+                    line(-this.lineLength, 0, this.chartWidth, 0);
                     textAlign(RIGHT, CENTER);
                     textStyle(BOLD);
                     textSize(13);
@@ -125,7 +136,16 @@ class StackedChart {
                         rotate(this.rotationAngle);
                         text("0", 0, 0);
                     pop();
+
+                    // Graph Title
+                    fill(this.axisTextColour);
+                    textAlign(CENTER);
+                    noStroke();
+                    textStyle(BOLD);
+                    text(this.title, (this.chartWidth/2), -this.titleGap);
+
                     // x axis
+                    stroke(this.axisColour);
                     line(0, 0, (this.numOfLines * ceil(this.chartWidth/this.numOfLines)), 0);
                     push();
                         fill(this.axisTextColour);
@@ -220,7 +240,16 @@ class StackedChart {
                             text(round((100/this.numOfLines) * (i + 1)) + "%", -this.wordGap, 0);
                         }
                     pop();
+
+                    // Graph Title
+                    fill(this.axisTextColour);
+                    textAlign(CENTER);
+                    noStroke();
+                    textStyle(BOLD);
+                    text(this.title, (this.chartWidth/2), -this.titleGap);
+                    
                     // x axis
+                    stroke(this.axisColour);
                     line(-this.lineLength , 0, this.chartWidth, 0);
                     fill(this.axisTextColour);
                     textAlign(RIGHT, CENTER);
@@ -262,11 +291,13 @@ class StackedChart {
             else if (this.direction == "horizontal") {
                 this.gap = (this.chartHeight - this.data.length * this.barWidth - this.margin * 2) / (this.data.length - 1);
                 this.data.map((row) => {
-                    let rowTotal = row[this.yValue1] + row[this.yValue2];
-                    row[this.yValue1] = row[this.yValue1]/rowTotal;
-                    row[this.yValue2] = row[this.yValue2]/rowTotal;
-                    // console.log(row[this.yValue1]);
-                    // console.log(row[this.yValue2]);
+                    let rowTotal = 0;
+                    for (let k = 0; k < this.yValues.length; k++) {
+                        rowTotal += row[this.yValues[k]];
+                    }
+                    for (let l = 0; l < this.yValues.length; l++) {
+                        row[this.yValues[l]] = row[this.yValues[l]]/rowTotal;
+                    }
                 });
                 push();
                     translate(this.chartPosX, this.chartPosY);
@@ -285,7 +316,16 @@ class StackedChart {
                         rotate(this.rotationAngle);
                         text("0%", 0, 0);
                     pop();
+
+                    // Graph Title
+                    fill(this.axisTextColour);
+                    textAlign(CENTER);
+                    noStroke();
+                    textStyle(BOLD);
+                    text(this.title, (this.chartWidth/2), -this.titleGap);
+
                     // x axis
+                    stroke(this.axisColour);
                     line(0, 0, this.chartWidth, 0);
                     push();
                         fill(this.axisTextColour);
@@ -311,11 +351,18 @@ class StackedChart {
                             let yPos = (this.barWidth + this.gap) * i;
                             fill(this.barColour1);
                             noStroke();
-                            rect(0, -yPos, (this.data[i][this.yValue1] * this.chartWidth), -this.barWidth);
                             push();
-                                translate((this.data[i][this.yValue1] * this.chartWidth), -yPos);
-                                fill(this.barColour2)
-                                rect(0, 0, (this.data[i][this.yValue2] * this.chartWidth), -this.barWidth,);
+                                translate(0, -yPos);
+                                for (let m = 0; m < this.yValues.length; m++) {
+                                    if (m < 2) {
+                                        fill(this.barColours[m]);
+                                    }
+                                    else {
+                                        fill(this.barColours[2]); //barColours[2] is a random colour.
+                                    }
+                                    rect(0, 0, (this.data[i][this.yValues[m]] * this.chartWidth), -this.barWidth);
+                                    translate((this.data[i][this.yValues[m]] * this.chartWidth), 0)
+                                }
                             pop();
                             fill(this.axisTextColour);
                             textAlign(RIGHT);

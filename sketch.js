@@ -72,38 +72,38 @@ function setup() {
         relativeOrAbsolute: "absolute",
         numOfLines: 7,
         chartHeight: 450,
-        chartWidth: 150,
+        chartWidth: 250,
         chartPosX: 900,
         chartPosY: 550,
         wordGap: 35,
     }));
+        //Vertical 100% Chart
+        barCharts.push(new StackedChart({
+            data: cleanedData,
+            xValue: "Age_Group",
+            yValues: ["Male", "Female", "Total"],
+            direction: "vertical",
+            relativeOrAbsolute: "relative",
+            numOfLines: 7,
+            chartHeight: 150,
+            chartWidth: 450,
+            chartPosX: 100,
+            chartPosY: 850,
+            title: "Look at this graph!",
+        }));
     //Horizontal 100% Chart
     barCharts.push(new StackedChart({
         data: cleanedData,
         xValue: "Age_Group",
-        yValue1: "Male",
-        yValue2: "Female",
+        yValues: ["Male", "Female", "Total"],
         direction: "horizontal",
         relativeOrAbsolute: "relative",
         numOfLines: 7,
         chartHeight: 450,
-        chartWidth: 150,
+        chartWidth: 250,
         chartPosX: 900,
-        chartPosY: 1050,
+        chartPosY: 1150,
         wordGap: 40,
-    }));
-    //Vertical 100% Chart
-    barCharts.push(new StackedChart({
-        data: cleanedData,
-        xValue: "Age_Group",
-        yValues: ["Male", "Female", "Total"],
-        direction: "vertical",
-        relativeOrAbsolute: "relative",
-        numOfLines: 7,
-        chartHeight: 150,
-        chartWidth: 450,
-        chartPosX: 100,
-        chartPosY: 850,
     }));
 
     // barCharts.push(new StackedChart(cleanedData, "Age_Group", "Male", "Female", "horizontal", "relative", 4, 400, 450, 30, 15, 50, 2, 1000, 1000));
