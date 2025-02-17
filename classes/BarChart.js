@@ -25,119 +25,122 @@ class BarChart {
     }
 
     renderBarChart() {
-            if (this.direction == "vertical") {
-                this.scaler = this.chartHeight / max(this.data.map(row => row[this.yValue]));
+        let maxVar = max(this.data.map(row => row[this.yValue]));
+        if (this.direction == "vertical") {
+            this.scaler = this.chartHeight / maxVar;
+            push();
+                translate(this.chartPosX, this.chartPosY);
+                noFill();
+                stroke(this.axisColour);
+                strokeWeight(this.axisThickness);
+                // y axis
+                line(0, 0, 0, -(this.numOfLines * ceil(this.chartHeight/this.numOfLines)));
                 push();
-                    translate(this.chartPosX, this.chartPosY);
-                    noFill();
-                    stroke(this.axisColour);
-                    strokeWeight(this.axisThickness);
-                    // y axis
-                    line(0, 0, 0, -(this.numOfLines * ceil(this.chartHeight/this.numOfLines)));
-                    push();
-                        fill(this.axisTextColour);
-                        textAlign(RIGHT, CENTER);
-                        textStyle(BOLD);
-                        textSize(13);
-                        for (let i = 0; i < this.numOfLines; i++) {
-                            stroke(this.axisColour);
-                            let distance = ceil(this.chartHeight/this.numOfLines);
-                            translate(0, -distance);
-                            line(0, 0, -this.lineLength, 0);
-                            noStroke();
-                            text(distance * (i + 1), -this.wordGap, 0);
-                        }
-                    pop();
-                    // x axis
-                    line(-this.lineLength, 0, this.chartWidth, 0);
                     fill(this.axisTextColour);
                     textAlign(RIGHT, CENTER);
                     textStyle(BOLD);
                     textSize(13);
-                    noStroke();
-                    text("0", -this.wordGap, 0);
-                    push();
-                        translate(this.margin, 0);
-                        for (i = 0; i < this.data.length; i++) {
-                            let xPos = (this.barWidth + this.gap) * i;
-                            fill(this.barColour);
-                            noStroke();
-                            rect(xPos, 0, this.barWidth, -(this.data[i][this.yValue] * this.scaler));
-                            fill(this.axisTextColour);
-                            textAlign(LEFT);
-                            textStyle(BOLD);
-                            textSize(13);
-                            push();
-                                translate(xPos + this.barWidth / 2, 15);
-                                rotate(this.rotationAngle);
-                                text(this.data[i][this.xValue], 0, 0);
-                            pop();
-                        }
-                    pop();
+                    for (let i = 0; i < this.numOfLines; i++) {
+                        stroke(this.axisColour);
+                        let distance = ceil(this.chartHeight/this.numOfLines);
+                        let textVar = ceil(maxVar / this.numOfLines);
+                        translate(0, -distance);
+                        line(0, 0, -this.lineLength, 0);
+                        noStroke();
+                        text(textVar * (i + 1), -this.wordGap, 0);
+                    }
                 pop();
-            }
-    
-            else if (this.direction == "horizontal") {
-                this.scaler = this.chartWidth / max(this.data.map(row => row[this.yValue]));
+                // x axis
+                line(-this.lineLength, 0, this.chartWidth, 0);
+                fill(this.axisTextColour);
+                textAlign(RIGHT, CENTER);
+                textStyle(BOLD);
+                textSize(13);
+                noStroke();
+                text("0", -this.wordGap, 0);
                 push();
-                    translate(this.chartPosX, this.chartPosY);
-                    noFill();
-                    stroke(this.axisColour);
-                    strokeWeight(this.axisThickness);
-                    // y axis
-                    line(0, this.lineLength, 0, -this.chartHeight);
+                    translate(this.margin, 0);
+                    for (i = 0; i < this.data.length; i++) {
+                        let xPos = (this.barWidth + this.gap) * i;
+                        fill(this.barColour);
+                        noStroke();
+                        rect(xPos, 0, this.barWidth, -(this.data[i][this.yValue] * this.scaler));
+                        fill(this.axisTextColour);
+                        textAlign(LEFT);
+                        textStyle(BOLD);
+                        textSize(13);
+                        push();
+                            translate(xPos + this.barWidth / 2, 15);
+                            rotate(this.rotationAngle);
+                            text(this.data[i][this.xValue], 0, 0);
+                        pop();
+                    }
+                pop();
+            pop();
+        }
+
+        else if (this.direction == "horizontal") {
+            this.scaler = this.chartWidth / maxVar;
+            push();
+                translate(this.chartPosX, this.chartPosY);
+                noFill();
+                stroke(this.axisColour);
+                strokeWeight(this.axisThickness);
+                // y axis
+                line(0, this.lineLength, 0, -this.chartHeight);
+                fill(this.axisTextColour);
+                textAlign(CENTER);
+                textStyle(BOLD);
+                textSize(13);
+                push();
+                    noStroke();
+                    translate(0, this.wordGap);
+                    rotate(this.rotationAngle);
+                    text("0", 0, 0);
+                pop();
+                // x axis
+                line(0, 0, (this.numOfLines * ceil(this.chartWidth/this.numOfLines)), 0);
+                push();
                     fill(this.axisTextColour);
                     textAlign(CENTER);
                     textStyle(BOLD);
                     textSize(13);
-                    push();
+                    for (let i = 0; i < this.numOfLines; i++) {
+                        stroke(this.axisColour);
+                        let distance = ceil(this.chartWidth/this.numOfLines);
+                        let textVar = ceil(maxVar / this.numOfLines);
+                        translate(distance, 0);
+                        line(0, 0, 0, this.lineLength);
                         noStroke();
-                        translate(0, this.wordGap);
-                        rotate(this.rotationAngle);
-                        text("0", 0, 0);
-                    pop();
-                    // x axis
-                    line(0, 0, (this.numOfLines * ceil(this.chartWidth/this.numOfLines)), 0);
-                    push();
+                        push();
+                            translate(0, this.wordGap);
+                            rotate(this.rotationAngle);
+                            text(textVar * (i + 1), 0, 0);
+                        pop();
+                    }
+                pop();
+                push();
+                    translate(0, -this.margin);
+                    for (i = 0; i < this.data.length; i++) {
+                        let yPos = (this.barWidth + this.gap) * i;
+                        fill(this.barColour);
+                        noStroke();
+                        rect(0, -yPos, (this.data[i][this.yValue] * this.scaler), -this.barWidth);
                         fill(this.axisTextColour);
-                        textAlign(CENTER);
+                        textAlign(RIGHT);
                         textStyle(BOLD);
                         textSize(13);
-                        for (let i = 0; i < this.numOfLines; i++) {
-                            stroke(this.axisColour);
-                            let distance = ceil(this.chartWidth/this.numOfLines);
-                            translate(distance, 0);
-                            line(0, 0, 0, this.lineLength);
-                            noStroke();
-                            push();
-                                translate(0, this.wordGap);
-                                rotate(this.rotationAngle);
-                                text(distance * (i + 1), 0, 0);
-                            pop();
-                        }
-                    pop();
-                    push();
-                        translate(0, -this.margin);
-                        for (i = 0; i < this.data.length; i++) {
-                            let yPos = (this.barWidth + this.gap) * i;
-                            fill(this.barColour);
-                            noStroke();
-                            rect(0, -yPos, (this.data[i][this.yValue] * this.scaler), -this.barWidth);
-                            fill(this.axisTextColour);
-                            textAlign(RIGHT);
-                            textStyle(BOLD);
-                            textSize(13);
-                            push();
-                                translate(-15, -(yPos + this.barWidth / 2));
-                                text(this.data[i][this.xValue], 0, 0);
-                            pop();
-                        }
-                    pop();
+                        push();
+                            translate(-15, -(yPos + this.barWidth / 2));
+                            text(this.data[i][this.xValue], 0, 0);
+                        pop();
+                    }
                 pop();
-            }
-    
-            else {
-                console.log("Direction must be vertical or horizontal");
-            }
+            pop();
+        }
+
+        else {
+            console.log("Direction must be vertical or horizontal");
+        }
     }
 }

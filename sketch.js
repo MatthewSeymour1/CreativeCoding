@@ -34,7 +34,7 @@ function setup() {
         numOfLines: 11,
         chartHeight: 200,
         chartWidth: 200,
-        chartPosX: 50,
+        chartPosX: 100,
         chartPosY: 250,
     }));
     //Horizontal Bar Chart
@@ -60,15 +60,14 @@ function setup() {
         numOfLines: 8,
         chartHeight: 150,
         chartWidth: 450,
-        chartPosX: 50,
+        chartPosX: 100,
         chartPosY: 550
     }));
     //Horizontal Stacked Chart
     barCharts.push(new StackedChart({
         data: cleanedData,
         xValue: "Age_Group",
-        yValue1: "Male",
-        yValue2: "Female",
+        yValues: ["Male", "Female", "Total"],
         direction: "horizontal",
         relativeOrAbsolute: "absolute",
         numOfLines: 7,
@@ -97,14 +96,13 @@ function setup() {
     barCharts.push(new StackedChart({
         data: cleanedData,
         xValue: "Age_Group",
-        yValue1: "Male",
-        yValue2: "Female",
+        yValues: ["Male", "Female", "Total"],
         direction: "vertical",
         relativeOrAbsolute: "relative",
         numOfLines: 7,
         chartHeight: 150,
         chartWidth: 450,
-        chartPosX: 50,
+        chartPosX: 100,
         chartPosY: 850,
     }));
 
