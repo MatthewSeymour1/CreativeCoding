@@ -17,6 +17,9 @@ class BarChart {
         this.lineLength = obj.lineLength || 20;
         this.titleGap = (obj.titleGap + this.chartHeight) || (20 + this.chartHeight);
         this.title = obj.title || "Graph Title";
+        this.dashLineLength = obj.dashLineLength || 10;
+        this.dashLineGap = obj.dashLineGap || 10;
+        this.dashLineColour = obj.dashLineColour || color(220);
 
         this.gap = (this.chartWidth - this.data.length * this.barWidth - this.margin * 2) / (this.data.length - 1);
         this.scaler;
@@ -48,8 +51,13 @@ class BarChart {
                         let textVar = ceil(maxVar / this.numOfLines);
                         translate(0, -distance);
                         line(0, 0, -this.lineLength, 0);
+                        // This draws a dotted line horizontally
+                        drawingContext.setLineDash([this.dashLineLength, this.dashLineGap]);
+                        stroke(this.dashLineColour);
+                        line(0, 0, this.chartWidth, 0);
                         noStroke();
                         text(textVar * (i + 1), -this.wordGap, 0);
+                        drawingContext.setLineDash([]);
                     }
                 pop();
 
@@ -130,6 +138,12 @@ class BarChart {
                         let distance = ceil(this.chartWidth/this.numOfLines);
                         let textVar = ceil(maxVar / this.numOfLines);
                         translate(distance, 0);
+                        // This draws a dotted line horizontally
+                        drawingContext.setLineDash([this.dashLineLength, this.dashLineGap]);
+                        stroke(this.dashLineColour);
+                        line(0, 0, 0, -this.chartHeight);
+                        drawingContext.setLineDash([]);
+                        stroke(this.axisColour);
                         line(0, 0, 0, this.lineLength);
                         noStroke();
                         push();

@@ -2,6 +2,8 @@ let data;
 let cleanedData = [];
 let barCharts = [];
 
+let font;
+
 // let femaleScores;
 // let ageGroups;
 // let chartHeight = 400;
@@ -15,12 +17,14 @@ let barCharts = [];
 // let chartPosY = 450;
 // let axisColour;
 // let barColour;
- 
+
 function preload() {
     data = loadTable("data/Combined.csv", "csv", "header");
+    font = loadFont('/fonts/Poppins/Poppins-Black.ttf');
 }
- 
+
 function setup() {
+    textFont(font);
     createCanvas(8000, 6000);
     angleMode(DEGREES);
     noLoop();
