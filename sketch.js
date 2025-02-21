@@ -98,9 +98,10 @@ function setup() {
     barCharts.push(new RadialHistogram({
         data: cleanedData,
         xValue: "Age_Group",
-        yValues: ["Male", "Female", "Total"],
+        yValue: "Male",
         chartPosX: 500,
         chartPosY: 1500,
+        gap: 1,
     }));
 
     // barCharts.push(new StackedChart(cleanedData, "Age_Group", "Male", "Female", "horizontal", "relative", 4, 400, 450, 30, 15, 50, 2, 1000, 1000));
