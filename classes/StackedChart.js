@@ -221,10 +221,11 @@ class StackedChart {
         }
 
         else if (this.relativeOrAbsolute == "relative") {
+            let dataCopy = this.data.map(row => ({ ...row })); //Creates a copy of this.data so that this.data is not permanently changed during the map.
             if (this.direction == "vertical") {
-                this.gap = (this.chartWidth - this.data.length * this.barWidth - this.margin * 2) / (this.data.length - 1);
+                this.gap = (this.chartWidth - dataCopy.length * this.barWidth - this.margin * 2) / (dataCopy.length - 1);
 
-                this.data.map((row) => {
+                dataCopy.map((row) => {
                     let rowTotal = 0;
                     for (let k = 0; k < this.yValues.length; k++) {
                         rowTotal += row[this.yValues[k]];
@@ -273,7 +274,7 @@ class StackedChart {
                     text("0%", -this.wordGap, 0);
                     push();
                         translate(this.margin, 0);
-                        for (i = 0; i < this.data.length; i++) {
+                        for (i = 0; i < dataCopy.length; i++) {
                             let xPos = (this.barWidth + this.gap) * i;
                             noStroke();
                             push();
@@ -285,8 +286,8 @@ class StackedChart {
                                     else {
                                         fill(this.barColours[2]); //barColours[2] is a random colour.
                                     }
-                                    rect(0, 0, this.barWidth, -(this.data[i][this.yValues[m]] * this.chartHeight));
-                                    translate(0, -(this.data[i][this.yValues[m]] * this.chartHeight))
+                                    rect(0, 0, this.barWidth, -(dataCopy[i][this.yValues[m]] * this.chartHeight));
+                                    translate(0, -(dataCopy[i][this.yValues[m]] * this.chartHeight))
                                 }
                             pop();
                             fill(this.axisTextColour);
@@ -296,15 +297,15 @@ class StackedChart {
                             push();
                                 translate(xPos + this.barWidth / 2, 15);
                                 rotate(this.rotationAngle);
-                                text(this.data[i][this.xValue], 0, 0);
+                                text(dataCopy[i][this.xValue], 0, 0);
                             pop();
                         }
                     pop();
                 pop();
             }
             else if (this.direction == "horizontal") {
-                this.gap = (this.chartHeight - this.data.length * this.barWidth - this.margin * 2) / (this.data.length - 1);
-                this.data.map((row) => {
+                this.gap = (this.chartHeight - dataCopy.length * this.barWidth - this.margin * 2) / (dataCopy.length - 1);
+                dataCopy.map((row) => {
                     let rowTotal = 0;
                     for (let k = 0; k < this.yValues.length; k++) {
                         rowTotal += row[this.yValues[k]];
@@ -361,7 +362,7 @@ class StackedChart {
                     pop();
                     push();
                         translate(0, -this.margin);
-                        for (i = 0; i < this.data.length; i++) {
+                        for (i = 0; i < dataCopy.length; i++) {
                             let yPos = (this.barWidth + this.gap) * i;
                             fill(this.barColour1);
                             noStroke();
@@ -374,8 +375,8 @@ class StackedChart {
                                     else {
                                         fill(this.barColours[2]); //barColours[2] is a random colour.
                                     }
-                                    rect(0, 0, (this.data[i][this.yValues[m]] * this.chartWidth), -this.barWidth);
-                                    translate((this.data[i][this.yValues[m]] * this.chartWidth), 0)
+                                    rect(0, 0, (dataCopy[i][this.yValues[m]] * this.chartWidth), -this.barWidth);
+                                    translate((dataCopy[i][this.yValues[m]] * this.chartWidth), 0)
                                 }
                             pop();
                             fill(this.axisTextColour);
@@ -384,7 +385,7 @@ class StackedChart {
                             textSize(13);
                             push();
                                 translate(-15, -(yPos + this.barWidth / 2));
-                                text(this.data[i][this.xValue], 0, 0);
+                                text(dataCopy[i][this.xValue], 0, 0);
                             pop();
                         }
                     pop();

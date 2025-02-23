@@ -14,7 +14,7 @@ function setup() {
     angleMode(DEGREES);
     noLoop();
     cleanData();
-    //Vertical Bar Chart
+    // Vertical Bar Chart
     barCharts.push(new BarChart({
         data: cleanedData,
         xValue: "Age_Group",
@@ -100,8 +100,11 @@ function setup() {
         xValue: "Age_Group",
         yValue: "Male",
         chartPosX: 500,
-        chartPosY: 1500,
+        chartPosY: 1200,
+        chartDiameter: 250,
+        wordGap: 50,
         gap: 1,
+        numOfGridLines: 5,
     }));
 
     // barCharts.push(new StackedChart(cleanedData, "Age_Group", "Male", "Female", "horizontal", "relative", 4, 400, 450, 30, 15, 50, 2, 1000, 1000));
