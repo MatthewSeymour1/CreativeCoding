@@ -1,6 +1,3 @@
-//Error: When I make a relative stacked bar chart, it changes all future bar charts to be relative even if they are set to absolute.
-
-
 class StackedChart {
     constructor(obj) {
         this.data = obj.data;

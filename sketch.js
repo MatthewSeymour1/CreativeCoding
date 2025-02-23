@@ -14,11 +14,25 @@ function setup() {
     angleMode(DEGREES);
     noLoop();
     cleanData();
-    // Vertical Bar Chart
-    barCharts.push(new BarChart({
+
+    // // Vertical Bar Chart
+    // barCharts.push(new BarChart({
+    //     data: cleanedData,
+    //     xValue: "Age_Group",
+    //     yValue: "Female",
+    //     direction: "vertical",
+    //     numOfLines: 11,
+    //     chartHeight: 200,
+    //     chartWidth: 200,
+    //     chartPosX: 100,
+    //     chartPosY: 250,
+    // }));
+    // Master Vertical Bar Chart
+    barCharts.push(new MasterChart({
         data: cleanedData,
+        chartType: "BarChart",
         xValue: "Age_Group",
-        yValue: "Female",
+        yValues: ["Female"],
         direction: "vertical",
         numOfLines: 11,
         chartHeight: 200,
@@ -26,11 +40,26 @@ function setup() {
         chartPosX: 100,
         chartPosY: 250,
     }));
-    //Horizontal Bar Chart
-    barCharts.push(new BarChart({
+    
+    // //Horizontal Bar Chart
+    // barCharts.push(new BarChart({
+    //     data: cleanedData,
+    //     xValue: "Age_Group",
+    //     yValue: "Female",
+    //     direction: "horizontal",
+    //     numOfLines: 11,
+    //     chartHeight: 200,
+    //     chartWidth: 200,
+    //     chartPosX: 500,
+    //     chartPosY: 250,
+    //     wordGap: 35,
+    // }));
+    // Master Horizontal Bar Chart
+    barCharts.push(new MasterChart({
         data: cleanedData,
+        chartType: "BarChart",
         xValue: "Age_Group",
-        yValue: "Female",
+        yValues: ["Female"],
         direction: "horizontal",
         numOfLines: 11,
         chartHeight: 200,
@@ -39,9 +68,24 @@ function setup() {
         chartPosY: 250,
         wordGap: 35,
     }));
-    //Vertical Stacked Chart
-    barCharts.push(new StackedChart({
+
+    // //Vertical Stacked Chart
+    // barCharts.push(new StackedChart({
+    //     data: cleanedData,
+    //     xValue: "Age_Group",
+    //     yValues: ["Male", "Female", "Total"],
+    //     direction: "vertical",
+    //     relativeOrAbsolute: "absolute",
+    //     numOfLines: 8,
+    //     chartHeight: 150,
+    //     chartWidth: 450,
+    //     chartPosX: 100,
+    //     chartPosY: 550,
+    // }));
+    // Master Vertical Stacked Chart
+    barCharts.push(new MasterChart({
         data: cleanedData,
+        chartType: "StackedChart",
         xValue: "Age_Group",
         yValues: ["Male", "Female", "Total"],
         direction: "vertical",
@@ -50,11 +94,28 @@ function setup() {
         chartHeight: 150,
         chartWidth: 450,
         chartPosX: 100,
-        chartPosY: 550
+        chartPosY: 550,
+        barWidth: 30,
     }));
-    //Horizontal Stacked Chart
-    barCharts.push(new StackedChart({
+
+    // //Horizontal Stacked Chart
+    // barCharts.push(new StackedChart({
+    //     data: cleanedData,
+    //     xValue: "Age_Group",
+    //     yValues: ["Male", "Female", "Total"],
+    //     direction: "horizontal",
+    //     relativeOrAbsolute: "absolute",
+    //     numOfLines: 7,
+    //     chartHeight: 450,
+    //     chartWidth: 250,
+    //     chartPosX: 900,
+    //     chartPosY: 550,
+    //     wordGap: 35,
+    // }));
+    // Master Horizontal Stacked Chart
+    barCharts.push(new MasterChart({
         data: cleanedData,
+        chartType: "StackedChart",
         xValue: "Age_Group",
         yValues: ["Male", "Female", "Total"],
         direction: "horizontal",
@@ -65,10 +126,27 @@ function setup() {
         chartPosX: 900,
         chartPosY: 550,
         wordGap: 35,
+        barWidth: 30,
     }));
-    //Vertical 100% Chart
-    barCharts.push(new StackedChart({
+
+    // //Vertical 100% Chart
+    // barCharts.push(new StackedChart({
+    //     data: cleanedData,
+    //     xValue: "Age_Group",
+    //     yValues: ["Male", "Female", "Total"],
+    //     direction: "vertical",
+    //     relativeOrAbsolute: "relative",
+    //     numOfLines: 7,
+    //     chartHeight: 150,
+    //     chartWidth: 450,
+    //     chartPosX: 100,
+    //     chartPosY: 850,
+    //     title: "Look at this graph!",
+    // }));
+    // Master Vertical 100% Chart
+    barCharts.push(new MasterChart({
         data: cleanedData,
+        chartType: "StackedChart",
         xValue: "Age_Group",
         yValues: ["Male", "Female", "Total"],
         direction: "vertical",
@@ -79,10 +157,27 @@ function setup() {
         chartPosX: 100,
         chartPosY: 850,
         title: "Look at this graph!",
+        barWidth: 30,
     }));
-    //Horizontal 100% Chart
-    barCharts.push(new StackedChart({
+
+    // //Horizontal 100% Chart
+    // barCharts.push(new StackedChart({
+    //     data: cleanedData,
+    //     xValue: "Age_Group",
+    //     yValues: ["Male", "Female", "Total"],
+    //     direction: "horizontal",
+    //     relativeOrAbsolute: "relative",
+    //     numOfLines: 7,
+    //     chartHeight: 450,
+    //     chartWidth: 250,
+    //     chartPosX: 900,
+    //     chartPosY: 1150,
+    //     wordGap: 40,
+    // }));
+    // Master Horizontal 100% Chart
+    barCharts.push(new MasterChart({
         data: cleanedData,
+        chartType: "StackedChart",
         xValue: "Age_Group",
         yValues: ["Male", "Female", "Total"],
         direction: "horizontal",
@@ -93,14 +188,29 @@ function setup() {
         chartPosX: 900,
         chartPosY: 1150,
         wordGap: 40,
+        barWidth: 30,
     }));
-    //Radial Histogram
-    barCharts.push(new RadialHistogram({
+
+    // //Radial Histogram
+    // barCharts.push(new RadialHistogram({
+    //     data: cleanedData,
+    //     xValue: "Age_Group",
+    //     yValue: "Total",
+    //     chartPosX: 1400,
+    //     chartPosY: 200,
+    //     chartDiameter: 250,
+    //     wordGap: 50,
+    //     gap: 1,
+    //     numOfGridLines: 5,
+    // }));
+    // Master Radial Histogram
+    barCharts.push(new MasterChart({
         data: cleanedData,
+        chartType: "RadialHistogram",
         xValue: "Age_Group",
-        yValue: "Male",
-        chartPosX: 500,
-        chartPosY: 1200,
+        yValues: ["Total"],
+        chartPosX: 1400,
+        chartPosY: 200,
         chartDiameter: 250,
         wordGap: 50,
         gap: 1,
