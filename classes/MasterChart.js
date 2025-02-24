@@ -25,7 +25,7 @@ class MasterChart {
         this.dashLineGap = obj.dashLineGap || 10;
         this.dashLineColour = obj.dashLineColour || color(220);
 
-        this.gap;
+        this.gap = obj.gap || 1;
         this.scaler;
 
         this.axisColour = color(0, 0, 0);
