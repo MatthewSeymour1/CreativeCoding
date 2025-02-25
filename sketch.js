@@ -29,8 +29,9 @@ function setup() {
         numOfLines: 11,
         chartHeight: 200,
         chartWidth: 400,
-        chartPosX: 100,
+        chartPosX: 200,
         chartPosY: 250,
+        yTitleGap: 40,
     }));
     // Master Horizontal Bar Chart
     barCharts.push(new MasterChart({
@@ -60,13 +61,14 @@ function setup() {
         chartPosX: 100,
         chartPosY: 550,
         barWidth: 30,
+        yTitleGap: 40,
     }));
     // Master Horizontal Stacked Chart
     barCharts.push(new MasterChart({
         data: newCleanedData,
         chartType: "StackedChart",
         xValue: "YEAR",
-        yValues: ["Dublin", "Cork", "Galway"],
+        yValues: ["Dublin", "Cork", "Galway", "Limerick"],
         direction: "horizontal",
         relativeOrAbsolute: "absolute",
         numOfLines: 7,
@@ -98,7 +100,7 @@ function setup() {
         data: newCleanedData,
         chartType: "StackedChart",
         xValue: "YEAR",
-        yValues: ["Dublin", "Cork", "Galway"],
+        yValues: ["Dublin", "Cork", "Galway", "Limerick"],
         direction: "horizontal",
         relativeOrAbsolute: "relative",
         numOfLines: 7,
@@ -116,11 +118,12 @@ function setup() {
         xValue: "YEAR",
         yValues: ["Dublin"],
         chartPosX: 1400,
-        chartPosY: 200,
+        chartPosY: 400,
         chartDiameter: 250,
-        wordGap: 50,
+        wordGap: 40,
         gap: 1,
         numOfGridLines: 5,
+        titleGap: 30,
     }));
 }
 

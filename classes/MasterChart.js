@@ -19,8 +19,12 @@ class MasterChart {
         this.chartPosY = obj.chartPosY || 100;
         this.wordGap = obj.wordGap || 25;
         this.lineLength = obj.lineLength || 20;
-        this.titleGap = (obj.titleGap + this.chartHeight) || (20 + this.chartHeight);
+        this.titleGap = obj.titleGap || 20;
+        this.yTitleGap = obj.yTitleGap || 20;
+        this.xTitleGap = obj.xTitleGap || 20;
         this.title = obj.title || "Graph Title";
+        this.xAxisTitle = obj.xAxisTitle || "X Axis Title";
+        this.yAxisTitle = obj.yAxisTitle || "Y Axis Title";
         this.dashLineLength = obj.dashLineLength || 10;
         this.dashLineGap = obj.dashLineGap || 10;
         this.dashLineColour = obj.dashLineColour || color(220);
@@ -41,9 +45,9 @@ class MasterChart {
 
         if (this.chartType == "BarChart") {
             console.log("This is a Bar Chart");
-            this.gap = (this.chartWidth - this.data.length * this.barWidth - this.margin * 2) / (this.data.length - 1);
             let maxVar = max(this.data.map(row => row[this.yValues[0]]));
             if (this.direction == "vertical") {
+                this.gap = (this.chartWidth - this.data.length * this.barWidth - this.margin * 2) / (this.data.length - 1);
                 this.scaler = this.chartHeight / maxVar;
                 push();
                     translate(this.chartPosX, this.chartPosY);
@@ -72,13 +76,6 @@ class MasterChart {
                             drawingContext.setLineDash([]);
                         }
                     pop();
-    
-                    // Graph Title
-                    fill(this.axisTextColour);
-                    textAlign(CENTER);
-                    noStroke();
-                    textStyle(BOLD);
-                    text(this.title, (this.chartWidth/2), -this.titleGap);
     
                     // x axis
                     stroke(this.axisColour);
@@ -111,6 +108,7 @@ class MasterChart {
             }
     
             else if (this.direction == "horizontal") {
+                this.gap = (this.chartHeight - this.data.length * this.barWidth - this.margin * 2) / (this.data.length - 1);
                 this.scaler = this.chartWidth / maxVar;
                 push();
                     translate(this.chartPosX, this.chartPosY);
@@ -129,14 +127,7 @@ class MasterChart {
                         rotate(this.rotationAngle);
                         text("0", 0, 0);
                     pop();
-    
-                    // Graph Title
-                    fill(this.axisTextColour);
-                    textAlign(CENTER);
-                    noStroke();
-                    textStyle(BOLD);
-                    text(this.title, (this.chartWidth/2), -this.titleGap);
-    
+
                     // x axis
                     stroke(this.axisColour);
                     line(0, 0, (this.numOfLines * ceil(this.chartWidth/this.numOfLines)), 0);
@@ -189,6 +180,7 @@ class MasterChart {
                 console.log("Direction must be vertical or horizontal");
             }
             this.renderLegend();
+            this.renderTitles();
         }
 
         else if (this.chartType == "StackedChart") {
@@ -233,13 +225,6 @@ class MasterChart {
                                 text(textVar * (i + 1), -this.wordGap, 0);
                             }
                         pop();
-    
-                        // Graph Title
-                        fill(this.axisTextColour);
-                        textAlign(CENTER);
-                        noStroke();
-                        textStyle(BOLD);
-                        text(this.title, (this.chartWidth/2), -this.titleGap);
     
                         // x axis
     
@@ -302,13 +287,6 @@ class MasterChart {
                             rotate(this.rotationAngle);
                             text("0", 0, 0);
                         pop();
-    
-                        // Graph Title
-                        fill(this.axisTextColour);
-                        textAlign(CENTER);
-                        noStroke();
-                        textStyle(BOLD);
-                        text(this.title, (this.chartWidth/2), -this.titleGap);
     
                         // x axis
                         stroke(this.axisColour);
@@ -413,13 +391,6 @@ class MasterChart {
                                 text(round((100/this.numOfLines) * (i + 1)) + "%", -this.wordGap, 0);
                             }
                         pop();
-    
-                        // Graph Title
-                        fill(this.axisTextColour);
-                        textAlign(CENTER);
-                        noStroke();
-                        textStyle(BOLD);
-                        text(this.title, (this.chartWidth/2), -this.titleGap);
                         
                         // x axis
                         stroke(this.axisColour);
@@ -492,13 +463,6 @@ class MasterChart {
                             text("0%", 0, 0);
                         pop();
     
-                        // Graph Title
-                        fill(this.axisTextColour);
-                        textAlign(CENTER);
-                        noStroke();
-                        textStyle(BOLD);
-                        text(this.title, (this.chartWidth/2), -this.titleGap);
-    
                         // x axis
                         stroke(this.axisColour);
                         line(0, 0, this.chartWidth, 0);
@@ -563,6 +527,7 @@ class MasterChart {
                 console.log("relativeOrAbsolute must be relative or absolute");
             }
             this.renderLegend();
+            this.renderTitles();
         }
 
         else if (this.chartType == "RadialHistogram") {
@@ -575,6 +540,10 @@ class MasterChart {
             }
             push();
                 translate(this.chartPosX, this.chartPosY);
+                //Rectangle that shows values
+                push();
+                    
+                pop();
                 ellipse(0, 0, this.chartDiameter);
                 let distance = this.chartDiameter/this.numOfGridLines;
                 for (let i = 0; i < this.numOfGridLines; i++) {
@@ -611,6 +580,7 @@ class MasterChart {
                 }
             pop();
             this.renderLegend();
+            this.renderTitles();
         }
     }
 
@@ -640,5 +610,43 @@ class MasterChart {
             pop();
         }
 
+    }
+
+    renderTitles() {
+        if (this.chartType == "RadialHistogram") {
+            push();
+                translate(this.chartPosX, this.chartPosY);
+                //Graph Title
+                fill(this.axisTextColour);
+                textAlign(CENTER);
+                noStroke();
+                textStyle(BOLD);
+                text(this.title, 0, -this.titleGap - this.wordGap - this.chartDiameter/2);
+            pop();
+        }
+        else {
+            push();
+                translate(this.chartPosX, this.chartPosY);
+                //Graph Title
+                fill(this.axisTextColour);
+                textAlign(CENTER);
+                noStroke();
+                textStyle(BOLD);
+                text(this.title, (this.chartWidth/2), -this.titleGap - this.chartHeight);
+
+                //X-Axis Title
+                console.log("Drawing X-Axis now");
+                push();
+                    translate(-this.yTitleGap -this.wordGap -this.lineLength, -this.chartHeight/2);
+                    rotate(-90);
+                    text(this.yAxisTitle, 0, 0);
+                pop();
+
+
+                //Y-Axis Title
+                console.log("Drawing Y-Axis now");
+                text(this.xAxisTitle, this.chartWidth/2, this.xTitleGap + this.wordGap + this.lineLength);
+            pop();
+        }
     }
 }
