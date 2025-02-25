@@ -24,6 +24,7 @@ class MasterChart {
         this.dashLineLength = obj.dashLineLength || 10;
         this.dashLineGap = obj.dashLineGap || 10;
         this.dashLineColour = obj.dashLineColour || color(220);
+        this.textSize = obj.textSize || 13;
 
         this.gap = obj.gap || 1;
         this.scaler;
@@ -187,6 +188,7 @@ class MasterChart {
             else {
                 console.log("Direction must be vertical or horizontal");
             }
+            this.renderLegend();
         }
 
         else if (this.chartType == "StackedChart") {
@@ -260,7 +262,8 @@ class MasterChart {
                                             fill(this.barColours[j]);
                                         }
                                         else {
-                                            fill(this.barColours[2]); //barColours[2] is a random colour.
+                                            this.barColours.push(random(255), random(255), random(255));
+                                            fill(this.barColours[j]);
                                         }
                                         rect(0, 0, this.barWidth, -(this.data[i][this.yValues[j]] * this.scaler));
                                         translate(0, -(this.data[i][this.yValues[j]] * this.scaler));
@@ -349,7 +352,8 @@ class MasterChart {
                                             fill(this.barColours[j]);
                                         }
                                         else {
-                                            fill(this.barColours[2]); //barColours[2] is a random colour.
+                                            this.barColours.push(random(255), random(255), random(255));
+                                            fill(this.barColours[j]);
                                         }
                                         rect(0, 0, (this.data[i][this.yValues[j]] * this.scaler), -this.barWidth);
                                         translate((this.data[i][this.yValues[j]] * this.scaler), 0);
@@ -438,7 +442,8 @@ class MasterChart {
                                             fill(this.barColours[m]);
                                         }
                                         else {
-                                            fill(this.barColours[2]); //barColours[2] is a random colour.
+                                            this.barColours.push(random(255), random(255), random(255));
+                                            fill(this.barColours[m]);
                                         }
                                         rect(0, 0, this.barWidth, -(dataCopy[i][this.yValues[m]] * this.chartHeight));
                                         translate(0, -(dataCopy[i][this.yValues[m]] * this.chartHeight))
@@ -456,6 +461,7 @@ class MasterChart {
                             }
                         pop();
                     pop();
+                    
                 }
                 else if (this.direction == "horizontal") {
                     this.gap = (this.chartHeight - dataCopy.length * this.barWidth - this.margin * 2) / (dataCopy.length - 1);
@@ -527,7 +533,8 @@ class MasterChart {
                                             fill(this.barColours[m]);
                                         }
                                         else {
-                                            fill(this.barColours[2]); //barColours[2] is a random colour.
+                                            this.barColours.push(random(255), random(255), random(255));
+                                            fill(this.barColours[m]);
                                         }
                                         rect(0, 0, (dataCopy[i][this.yValues[m]] * this.chartWidth), -this.barWidth);
                                         translate((dataCopy[i][this.yValues[m]] * this.chartWidth), 0)
@@ -555,6 +562,7 @@ class MasterChart {
             else {
                 console.log("relativeOrAbsolute must be relative or absolute");
             }
+            this.renderLegend();
         }
 
         else if (this.chartType == "RadialHistogram") {
@@ -602,6 +610,35 @@ class MasterChart {
     
                 }
             pop();
+            this.renderLegend();
         }
+    }
+
+    renderLegend() {
+        if (this.chartType == "RadialHistogram") {
+            push();
+                translate(this.chartPosX, this.chartPosY);
+                for (let i = 0; i < this.yValues.length; i++) {
+                    fill(this.barColours[i]);
+                    rect(this.chartDiameter + 40, 0 - (i * this.textSize) + 5, 10, 10);
+                    textSize(this.textSize);
+                    textAlign(LEFT, TOP);
+                    text(this.yValues[i], this.chartDiameter + 60, 0 - (i * this.textSize));
+                }
+            pop();
+        }
+        else {
+            push();
+                translate(this.chartPosX, this.chartPosY);
+                for (let i = 0; i < this.yValues.length; i++) {
+                    fill(this.barColours[i]);
+                    rect(this.chartWidth + 40, -this.chartHeight/2 -(i * this.textSize) + 5, 10, 10);
+                    textSize(this.textSize);
+                    textAlign(LEFT, TOP);
+                    text(this.yValues[i], this.chartWidth + 60, -this.chartHeight/2 -(i * this.textSize));
+                }
+            pop();
+        }
+
     }
 }
