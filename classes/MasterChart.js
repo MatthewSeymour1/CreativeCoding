@@ -576,7 +576,6 @@ class MasterChart {
                         noStroke();
                         text(this.data[i][this.xValue], 0, 0);
                     pop();
-    
                 }
             pop();
             this.renderLegend();
@@ -589,12 +588,27 @@ class MasterChart {
             push();
                 translate(this.chartPosX, this.chartPosY);
                 for (let i = 0; i < this.yValues.length; i++) {
-                    fill(this.barColours[i]);
+                    fill(255, 0, 0);
                     rect(this.chartDiameter + 40, 0 - (i * this.textSize) + 5, 10, 10);
                     textSize(this.textSize);
                     textAlign(LEFT, TOP);
                     text(this.yValues[i], this.chartDiameter + 60, 0 - (i * this.textSize));
                 }
+                //Draws the Red Rectangle.
+                for (let y = -100; y < 100; y++) {  // Loop through the rectangle's height
+                    let r = map(y, 100, -100, 0, 255); // Map y position to red value
+                    stroke(r, 0, 0); // Set stroke color
+                    line(this.chartDiameter, y, this.chartDiameter + 30, y); // Draw horizontal line
+                }
+                fill(this.axisTextColour);
+                textAlign(RIGHT, CENTER);
+                textStyle(BOLD);
+                line(this.chartDiameter, 99, this.chartDiameter -this.lineLength, 99);
+                line(this.chartDiameter, -100, this.chartDiameter -this.lineLength, -100);
+                noStroke();
+                text("0", this.chartDiameter - this.lineLength, 99);
+                text(max(this.data.map(row => row[this.yValues[0]])), this.chartDiameter - this.lineLength, -100);
+
             pop();
         }
         else {
